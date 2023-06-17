@@ -75,3 +75,23 @@ class Branch_StaffSerializer(serializers.ModelSerializer):
         model = Branch
         fields=['name','staff']
 
+class LoginSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    password = serializers.CharField()
+
+
+class RegistrationSerializer(serializers.ModelSerializer):
+    role = serializers.ReadOnlyField(default="CUSTOMER")
+    class Meta:
+        model = Customer
+        fields = ['first_name', 'last_name', 'username', 'password', 'role']
+    
+    def create(self, validated_data):
+        user = Customer(
+            first_name=validated_data['first_name'],
+            last_name=validated_data['last_name'],
+            username=validated_data['username']
+        )
+        user.set_password(validated_data['password'])
+        user.save()
+        return user

@@ -9,4 +9,6 @@ urlpatterns = [
     path("branch_staff/",api.branch_staff,name='staff branch'),
     path("allcities/",api.Cities,name='all cities'),
     path("allcities/<int:city>",api.city_customer,name='Customers of city'),
+    path('api/login/', api.LoginView.as_view(), name='login'),
+    path('api/register/', api.RegistrationView.as_view({'post': 'create'}), name='register'),
 ]
